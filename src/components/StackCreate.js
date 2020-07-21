@@ -48,6 +48,7 @@ const StackCreate = ({ handleStackCreate }) => {
 				<Button
 					icon
 					fluid
+					positive
 					labelPosition='right'
 					onClick={onModalToggle}
 					animated='fade'
