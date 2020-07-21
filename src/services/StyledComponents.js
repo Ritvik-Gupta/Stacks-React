@@ -16,5 +16,5 @@ export const ScrollDiv = styled('div')`
 	box-shadow: ${props => (props.outset ? outsetShadow : insetShadow)};
 
 	overflow-y: ${props => (props.noScroll ? 'visible' : 'scroll')};
-	padding: ${props => (props.padding ? props.padding * 100 : 4)}%;
+	padding: ${props => (props.padding ? props.padding * 100 : 3)}%;
 `;

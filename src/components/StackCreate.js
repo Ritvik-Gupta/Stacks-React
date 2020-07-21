@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Icon, Button, Form, Modal } from 'semantic-ui-react';
+import { Icon, Button, Form, Modal, Header } from 'semantic-ui-react';
 
 import { ScrollDiv } from '../services/StyledComponents';
 import { getIcon, getColor, validTypes } from '../services/logicFuncs';
@@ -45,6 +45,15 @@ const StackCreate = ({ handleStackCreate }) => {
 	return (
 		<React.Fragment>
 			<ScrollDiv noScroll>
+				<Header size='small'>
+					<Icon name='paper plane' />
+					<Header.Content>
+						Create a New Stack
+						<Header.Subheader>
+							Initialise an Empty Stack with a Name
+						</Header.Subheader>
+					</Header.Content>
+				</Header>
 				<Button
 					icon
 					fluid

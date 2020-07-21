@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dropdown } from 'semantic-ui-react';
+import { Dropdown, Header, Icon } from 'semantic-ui-react';
 
 import { getIcon } from '../services/logicFuncs';
 import { ScrollDiv } from '../services/StyledComponents';
@@ -22,6 +22,13 @@ const StacksMenu = ({ stackCollection, handleStackChange, stackPos }) => {
 
 	return (
 		<ScrollDiv noScroll outset>
+			<Header size='small'>
+				<Icon name='outdent' />
+				<Header.Content>
+					Choose a Stack
+					<Header.Subheader>Choose one out of the following Stacks</Header.Subheader>
+				</Header.Content>
+			</Header>
 			<Dropdown
 				value={stackPos}
 				placeholder='Select a Stack'

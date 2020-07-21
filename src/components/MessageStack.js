@@ -93,6 +93,13 @@ const MessageStack = ({
 	return (
 		<React.Fragment>
 			<ScrollDiv noScroll>
+				<Header size='small'>
+					<Icon name='settings' />
+					<Header.Content>
+						Messages
+						<Header.Subheader>Checkout Messages collected</Header.Subheader>
+					</Header.Content>
+				</Header>
 				<Button.Group widths='2'>
 					{renderButton(
 						'red',
