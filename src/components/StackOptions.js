@@ -50,7 +50,7 @@ const StackOptions = ({ currentStack, handleStackPush, handleStackPop }) => {
 			<Form onSubmit={onStackPush}>
 				{input}
 				<Button.Group fluid>
-					<Button type='button' onClick={onStackPop}>
+					<Button negative type='button' onClick={onStackPop}>
 						Pop
 					</Button>
 					<Button.Or />

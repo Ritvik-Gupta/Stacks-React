@@ -102,7 +102,7 @@ const MessageStack = ({
 						onMessageOpen
 					)}
 					{renderButton(
-						'blue',
+						'green',
 						'inbox',
 						'Messages Archived',
 						archiveStack.length,
