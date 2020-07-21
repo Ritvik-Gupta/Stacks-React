@@ -2,7 +2,7 @@ import React from 'react';
 import { Segment, Message, Header, Icon } from 'semantic-ui-react';
 
 import { getIcon, getColor } from '../services/logicFuncs';
-import { ScrollDiv, StickyDiv } from '../services/StyledComponents';
+import { ScrollDiv } from '../services/StyledComponents';
 
 const VisualStack = ({ currentStack }) => {
 	const icon = getIcon(currentStack.type);
@@ -37,15 +37,13 @@ const VisualStack = ({ currentStack }) => {
 
 	return (
 		<ScrollDiv>
-			<StickyDiv>
-				<Header as='h2' color={color}>
-					<Icon name={icon} />
-					<Header.Content>
-						{currentStack.name.toUpperCase()} Stack
-						<Header.Subheader>Type : {currentStack.type}</Header.Subheader>
-					</Header.Content>
-				</Header>
-			</StickyDiv>
+			<Header as='h2' color={color}>
+				<Icon name={icon} />
+				<Header.Content>
+					{currentStack.name.toUpperCase()} Stack
+					<Header.Subheader>Type : {currentStack.type}</Header.Subheader>
+				</Header.Content>
+			</Header>
 			{stack.length > 0 ? mappedStack : emptyStack}
 		</ScrollDiv>
 	);

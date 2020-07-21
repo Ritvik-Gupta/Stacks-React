@@ -55,6 +55,14 @@ const App = () => {
 					stack: new Stack(new Array(size).fill(null)),
 				},
 			]);
+			setCollectedMessages([
+				...collectedMessages,
+				{
+					head: 'Stack Created Successfully',
+					body: `Created Stack ${name.toUpperCase()} of Type < ${type} >`,
+					error: false,
+				},
+			]);
 		}
 	};
 
@@ -68,7 +76,14 @@ const App = () => {
 				stackCollection[stackPos].stack.top
 			);
 			if (newStack.push(value) === false) {
-				setCollectedMessages([...collectedMessages, 'Stack is Full']);
+				setCollectedMessages([
+					...collectedMessages,
+					{
+						head: 'Element Pushed Successfully',
+						body: `Pushed element : ${value}`,
+						error: false,
+					},
+				]);
 			} else {
 				setStackCollection(
 					stackCollection.map((el, index) => {
@@ -85,9 +100,12 @@ const App = () => {
 			stackCollection[stackPos].stack.copy,
 			stackCollection[stackPos].stack.top
 		);
-		const popEl = newStack.pop();
-		if (popEl === null) {
-			setCollectedMessages([...collectedMessages, 'Stack is Empty']);
+		const value = newStack.pop();
+		if (value === null) {
+			setCollectedMessages([
+				...collectedMessages,
+				{ head: 'Stack is Empty', body: 'Stack is Empty', error: true },
+			]);
 		} else {
 			setStackCollection(
 				stackCollection.map((el, index) => {
@@ -95,6 +113,14 @@ const App = () => {
 					return { ...el, stack: newStack };
 				})
 			);
+			setCollectedMessages([
+				...collectedMessages,
+				{
+					head: 'Element Popped Successfully',
+					body: `Popped element : ${value}`,
+					error: false,
+				},
+			]);
 		}
 	};
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Message, Header, Icon } from 'semantic-ui-react';
 
-import { ScrollDiv, StickyDiv } from '../services/StyledComponents';
+import { ScrollDiv } from '../services/StyledComponents';
 
 const MessageStack = ({ collectedMessages }) => {
 	const mappedStack = collectedMessages.map((msg, index) => {
@@ -20,17 +20,15 @@ const MessageStack = ({ collectedMessages }) => {
 	});
 	return (
 		<ScrollDiv>
-			<StickyDiv>
-				<Header as='h2' color='violet'>
-					<Icon name='cog' loading />
-					<Header.Content>
-						Messages Collected
-						<Header.Subheader>
-							Check out al the Error and Success Messages
-						</Header.Subheader>
-					</Header.Content>
-				</Header>
-			</StickyDiv>
+			<Header as='h2' color='violet'>
+				<Icon name='cog' loading />
+				<Header.Content>
+					Messages Collected
+					<Header.Subheader>
+						Check out al the Error and Success Messages
+					</Header.Subheader>
+				</Header.Content>
+			</Header>
 			{mappedStack}
 		</ScrollDiv>
 	);
