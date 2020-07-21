@@ -10,14 +10,14 @@ export const Grid = styled('div')`
 	grid-template-areas:
 		'a a a a a a c c c c'
 		'd d d d d d c c c c'
-		'd d d d d d c c c c'
-		'd d d d d d c c c c'
 		'e e e e e e c c c c'
-		'e e e e e e c c c c'
-		'e e e e e e c c c c'
-		'e e e e e e b b b b'
-		'e e e e e e b b b b'
-		'e e e e e e b b b b';
+		'b b b b b b c c c c'
+		'b b b b b b c c c c'
+		'b b b b b b c c c c'
+		'b b b b b b c c c c'
+		'b b b b b b c c c c'
+		'b b b b b b c c c c'
+		'f f f f f f c c c c';
 `;
 export const GridItem = styled('div')`
 	grid-area: ${({ area }) => area};
