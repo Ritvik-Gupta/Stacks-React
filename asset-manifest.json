@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.js": "/Stacks-React/static/js/main.33b3738d.chunk.js",
-    "main.js.map": "/Stacks-React/static/js/main.33b3738d.chunk.js.map",
+    "main.js": "/Stacks-React/static/js/main.874b9718.chunk.js",
+    "main.js.map": "/Stacks-React/static/js/main.874b9718.chunk.js.map",
     "runtime-main.js": "/Stacks-React/static/js/runtime-main.3b9cdb13.js",
     "runtime-main.js.map": "/Stacks-React/static/js/runtime-main.3b9cdb13.js.map",
     "static/css/2.9b853432.chunk.css": "/Stacks-React/static/css/2.9b853432.chunk.css",
-    "static/js/2.9faf600f.chunk.js": "/Stacks-React/static/js/2.9faf600f.chunk.js",
-    "static/js/2.9faf600f.chunk.js.map": "/Stacks-React/static/js/2.9faf600f.chunk.js.map",
+    "static/js/2.f12c394c.chunk.js": "/Stacks-React/static/js/2.f12c394c.chunk.js",
+    "static/js/2.f12c394c.chunk.js.map": "/Stacks-React/static/js/2.f12c394c.chunk.js.map",
     "index.html": "/Stacks-React/index.html",
-    "precache-manifest.bc9a5ea300b501d3f0956dbe90ec9676.js": "/Stacks-React/precache-manifest.bc9a5ea300b501d3f0956dbe90ec9676.js",
+    "precache-manifest.9a0e3666eb0f3d2d3bbf877191c40ddf.js": "/Stacks-React/precache-manifest.9a0e3666eb0f3d2d3bbf877191c40ddf.js",
     "service-worker.js": "/Stacks-React/service-worker.js",
     "static/css/2.9b853432.chunk.css.map": "/Stacks-React/static/css/2.9b853432.chunk.css.map",
-    "static/js/2.9faf600f.chunk.js.LICENSE.txt": "/Stacks-React/static/js/2.9faf600f.chunk.js.LICENSE.txt",
+    "static/js/2.f12c394c.chunk.js.LICENSE.txt": "/Stacks-React/static/js/2.f12c394c.chunk.js.LICENSE.txt",
     "static/media/semantic.min.css": "/Stacks-React/static/media/outline-icons.ef60a4f6.woff"
   },
   "entrypoints": [
     "static/js/runtime-main.3b9cdb13.js",
     "static/css/2.9b853432.chunk.css",
-    "static/js/2.9faf600f.chunk.js",
-    "static/js/main.33b3738d.chunk.js"
+    "static/js/2.f12c394c.chunk.js",
+    "static/js/main.874b9718.chunk.js"
   ]
 }
