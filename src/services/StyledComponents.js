@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Button } from 'semantic-ui-react';
 
 export const background = `#c1b8c1`;
 export const backgroundGradient = `linear-gradient(145deg, #cfc5cf, #aea6ae)`;
@@ -11,10 +12,16 @@ export const ScrollDiv = styled('div')`
 	width: 100%;
 	height: 100%;
 
-	border-radius: 0px;
+	border-radius: 10px;
 	background: ${background};
 	box-shadow: ${props => (props.outset ? outsetShadow : insetShadow)};
 
 	overflow-y: ${props => (props.noScroll ? 'visible' : 'scroll')};
 	padding: ${props => (props.padding ? props.padding * 100 : 4)}%;
+`;
+
+export const StyledButton = styled(Button)`
+	border-radius: 10px;
+	background: ${background};
+	box-shadow: ${props => (props.outset ? outsetShadow : insetShadow)};
 `;

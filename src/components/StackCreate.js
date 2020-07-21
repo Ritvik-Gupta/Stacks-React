@@ -44,7 +44,7 @@ const StackCreate = ({ handleStackCreate }) => {
 
 	return (
 		<React.Fragment>
-			<ScrollDiv noScroll outset>
+			<ScrollDiv noScroll>
 				<Button
 					icon
 					fluid

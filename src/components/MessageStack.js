@@ -3,7 +3,11 @@ import { Message, Header, Modal, Button, Icon } from 'semantic-ui-react';
 
 import { ScrollDiv } from '../services/StyledComponents';
 
-const MessageStack = ({ collectedMessages }) => {
+const MessageStack = ({
+	collectedMessages,
+	archivedMessages,
+	handleMessageArchive,
+}) => {
 	const [messageOpen, setMessageOpen] = useState(false);
 	const [archiveOpen, setArchiveOpen] = useState(false);
 
@@ -22,46 +26,58 @@ const MessageStack = ({ collectedMessages }) => {
 		setArchiveOpen(true);
 	};
 
-	const messageStack = collectedMessages.map((msg, index) => {
-		return (
-			<Message
-				key={index}
-				floating
-				error={msg.error === true}
-				success={msg.error !== true}
-				size='small'
-				icon={msg.error === true ? 'question' : 'star'}
-				header={msg.head}
-				content={msg.body}
-			/>
-		);
-	});
+	const onMessageArchive = () => {
+		handleMessageArchive();
+		onClose();
+	};
+
+	const messageStack = collectedMessages.map((msg, index) => (
+		<Message
+			key={index}
+			error={msg.error === true}
+			success={msg.error !== true}
+			size='small'
+			icon={msg.error === true ? 'question' : 'star'}
+			header={msg.head}
+			content={msg.body}
+		/>
+	));
+
+	const archiveStack = archivedMessages.map((msg, index) => (
+		<Message
+			key={index}
+			error={msg.error === true}
+			success={msg.error !== true}
+			size='small'
+			icon={msg.error === true ? 'question' : 'star'}
+			header={msg.head}
+			content={msg.body}
+		/>
+	));
 
 	const emptyStack = (
 		<Message
 			warning
 			icon='inbox'
+			size='small'
 			header='No Messages Found'
 			content='No new Messages are found'
 		/>
 	);
 
-	const renderModal = (open, stack, header, content) => (
+	const renderModal = (open, stack, header, content, button = null) => (
 		<Modal open={open} centered={false}>
 			<Modal.Header>{header}</Modal.Header>
 			<Modal.Content scrolling>
 				<Modal.Description>
-					<Header floated='right' size='medium'>
+					<Header floated='right' size='small'>
 						{content}
 					</Header>
 					{stack.length > 0 ? stack : emptyStack}
 				</Modal.Description>
 			</Modal.Content>
 			<Modal.Actions>
-				<Button labelPosition='right' icon primary>
-					<Icon name='chevron right' />
-					Go to the next Stack
-				</Button>
+				{button}
 				<Button onClick={onClose} negative>
 					Close
 				</Button>
@@ -69,24 +85,54 @@ const MessageStack = ({ collectedMessages }) => {
 		</Modal>
 	);
 
+	const renderButton = (color, icon, content, len, callback) => (
+		<Button
+			basic
+			fluid
+			color={color}
+			content={content}
+			icon={icon}
+			label={{
+				color,
+				pointing: 'left',
+				content: len,
+			}}
+			onClick={callback}
+		/>
+	);
+
 	return (
 		<React.Fragment>
 			<ScrollDiv noScroll>
-				<Button onClick={onMessageOpen}>Success Messages</Button>
-				<Button onClick={onArchiveOpen} floated='right'>
-					Error Messages
-				</Button>
+				{renderButton(
+					'red',
+					'fork',
+					'Current Messages',
+					messageStack.length,
+					onMessageOpen
+				)}
+				{renderButton(
+					'blue',
+					'inbox',
+					'Messages Archived',
+					archiveStack.length,
+					onArchiveOpen
+				)}
 			</ScrollDiv>
 
 			{renderModal(
 				messageOpen,
 				messageStack,
 				'Current Messages Collected',
-				'Check out all the Current Messages'
+				'Check out all the Current Messages',
+				<Button icon primary labelPosition='right' onClick={onMessageArchive}>
+					<Icon name='chevron right' />
+					Archive all the messages
+				</Button>
 			)}
 			{renderModal(
 				archiveOpen,
-				messageStack,
+				archiveStack,
 				'All Messages Archived',
 				'Check out all the Archived Messages'
 			)}

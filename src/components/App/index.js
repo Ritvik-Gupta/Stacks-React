@@ -12,6 +12,7 @@ import MessageStack from '../MessageStack';
 
 const App = () => {
 	const [collectedMessages, setCollectedMessages] = useState([]);
+	const [archivedMessages, setArchivedMessages] = useState([]);
 	const [stackPos, setStackPos] = useState(0);
 	const [stackCollection, setStackCollection] = useState([
 		{
@@ -124,6 +125,11 @@ const App = () => {
 		}
 	};
 
+	const handleMessageArchive = () => {
+		setArchivedMessages([...archivedMessages, ...collectedMessages]);
+		setCollectedMessages([]);
+	};
+
 	return (
 		<Grid>
 			<GridItem area='a'>
@@ -146,7 +152,11 @@ const App = () => {
 				<StackCreate handleStackCreate={handleStackCreate} />
 			</GridItem>
 			<GridItem area='e'>
-				<MessageStack collectedMessages={collectedMessages} />
+				<MessageStack
+					collectedMessages={collectedMessages}
+					archivedMessages={archivedMessages}
+					handleMessageArchive={handleMessageArchive}
+				/>
 			</GridItem>
 		</Grid>
 	);
