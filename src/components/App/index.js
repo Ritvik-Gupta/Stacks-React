@@ -80,9 +80,9 @@ const App = () => {
 				setCollectedMessages([
 					...collectedMessages,
 					{
-						head: 'Element Pushed Successfully',
-						body: `Pushed element : ${value}`,
-						error: false,
+						head: 'Stack is Full',
+						body: 'Cannot Push any more elements.',
+						error: true,
 					},
 				]);
 			} else {
@@ -92,6 +92,14 @@ const App = () => {
 						return { ...el, stack: newStack };
 					})
 				);
+				setCollectedMessages([
+					...collectedMessages,
+					{
+						head: 'Element Pushed Successfully',
+						body: `Pushed element : ${value}`,
+						error: false,
+					},
+				]);
 			}
 		}
 	};
@@ -105,7 +113,11 @@ const App = () => {
 		if (value === null) {
 			setCollectedMessages([
 				...collectedMessages,
-				{ head: 'Stack is Empty', body: 'Stack is Empty', error: true },
+				{
+					head: 'Stack is Empty',
+					body: 'Cannot Pop any more elements.',
+					error: true,
+				},
 			]);
 		} else {
 			setStackCollection(
