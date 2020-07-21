@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Dropdown } from 'semantic-ui-react';
 
 import { getIcon } from '../services/logicFuncs';
 import { ScrollDiv } from '../services/StyledComponents';
 
-const StacksMenu = ({ stackCollection, handleStackChange }) => {
-	const [currentIndex, setCurrentIndex] = useState(0);
-
+const StacksMenu = ({ stackCollection, handleStackChange, stackPos }) => {
 	const dropdownOptions = stackCollection.map((stack, index) => {
 		const icon = getIcon(stack.type);
 
@@ -20,13 +18,12 @@ const StacksMenu = ({ stackCollection, handleStackChange }) => {
 
 	const onStackChange = (_, { value }) => {
 		handleStackChange(value);
-		setCurrentIndex(value);
 	};
 
 	return (
 		<ScrollDiv noScroll outset>
 			<Dropdown
-				value={currentIndex}
+				value={stackPos}
 				placeholder='Select a Stack'
 				fluid
 				selection

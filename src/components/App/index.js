@@ -4,7 +4,7 @@ import Stack from '../../services/Stack';
 import { isValidStackConfig, isValidPush } from '../../services/logicFuncs';
 
 import { Grid, GridItem } from './styles';
-import StackList from '../StacksMenu';
+import StackMenu from '../StacksMenu';
 import VisualStack from '../VisualStack';
 import StackCreate from '../StackCreate';
 import StackOptions from '../StackOptions';
@@ -145,7 +145,8 @@ const App = () => {
 	return (
 		<Grid>
 			<GridItem area='a'>
-				<StackList
+				<StackMenu
+					stackPos={stackPos}
 					stackCollection={stackCollection}
 					handleStackChange={handleStackChange}
 				/>
