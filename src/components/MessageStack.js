@@ -31,40 +31,6 @@ const MessageStack = ({
 		onClose();
 	};
 
-	const messageStack = collectedMessages.map((msg, index) => (
-		<Message
-			key={index}
-			error={msg.error === true}
-			success={msg.error !== true}
-			size='small'
-			icon={msg.error === true ? 'question' : 'star'}
-			header={msg.head}
-			content={msg.body}
-		/>
-	));
-
-	const archiveStack = archivedMessages.map((msg, index) => (
-		<Message
-			key={index}
-			error={msg.error === true}
-			success={msg.error !== true}
-			size='small'
-			icon={msg.error === true ? 'question' : 'star'}
-			header={msg.head}
-			content={msg.body}
-		/>
-	));
-
-	const emptyStack = (
-		<Message
-			warning
-			icon='inbox'
-			size='small'
-			header='No Messages Found'
-			content='No new Messages are found'
-		/>
-	);
-
 	const renderModal = (open, stack, header, content, button = null) => (
 		<Modal open={open} centered={false}>
 			<Modal.Header>{header}</Modal.Header>
@@ -87,8 +53,6 @@ const MessageStack = ({
 
 	const renderButton = (color, icon, content, len, callback) => (
 		<Button
-			basic
-			fluid
 			color={color}
 			content={content}
 			icon={icon}
@@ -101,23 +65,50 @@ const MessageStack = ({
 		/>
 	);
 
+	const renderMessages = stack =>
+		stack.map((msg, index) => (
+			<Message
+				key={index}
+				error={msg.error === true}
+				success={msg.error !== true}
+				size='small'
+				icon={msg.error === true ? 'question' : 'star'}
+				header={msg.head}
+				content={msg.body}
+			/>
+		));
+
+	const messageStack = renderMessages(collectedMessages);
+	const archiveStack = renderMessages(archivedMessages);
+	const emptyStack = (
+		<Message
+			warning
+			icon='inbox'
+			size='small'
+			header='No Messages Found'
+			content='No new Messages are found'
+		/>
+	);
+
 	return (
 		<React.Fragment>
 			<ScrollDiv noScroll>
-				{renderButton(
-					'red',
-					'fork',
-					'Current Messages',
-					messageStack.length,
-					onMessageOpen
-				)}
-				{renderButton(
-					'blue',
-					'inbox',
-					'Messages Archived',
-					archiveStack.length,
-					onArchiveOpen
-				)}
+				<Button.Group widths='2'>
+					{renderButton(
+						'red',
+						'fork',
+						'Current Messages',
+						messageStack.length,
+						onMessageOpen
+					)}
+					{renderButton(
+						'blue',
+						'inbox',
+						'Messages Archived',
+						archiveStack.length,
+						onArchiveOpen
+					)}
+				</Button.Group>
 			</ScrollDiv>
 
 			{renderModal(

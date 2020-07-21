@@ -14,7 +14,7 @@ export const isValidPush = (val, type) => {
 			: [
 					{
 						head: 'Invalid Input of Type Number',
-						body: 'Invalid Input of Type Number',
+						body: 'Element to push should be a Number',
 						error: true,
 					},
 			  ];
@@ -24,7 +24,7 @@ export const isValidPush = (val, type) => {
 			: [
 					{
 						head: 'Invalid Input of Type Boolean',
-						body: 'Invalid Input of Type Boolean',
+						body: 'Element to push should be a Boolean',
 						error: true,
 					},
 			  ];
@@ -34,7 +34,7 @@ export const isValidPush = (val, type) => {
 			: [
 					{
 						head: 'Invalid Input of Type String',
-						body: 'Invalid Input of Type String',
+						body: 'Element to push should be a String',
 						error: true,
 					},
 			  ];
@@ -45,21 +45,21 @@ export const isValidStackConfig = (name, type, size) => {
 	if (name.length <= 0 || name.length >= 20 || name.toLowerCase() === 'default') {
 		errors.push({
 			head: 'Invalid Name for a Stack',
-			body: 'Invalid Name for a Stack',
+			body: 'Enter a Valid Name that is not "Default" or ""',
 			error: true,
 		});
 	}
 	if (!validTypes.includes(type)) {
 		errors.push({
 			head: 'Invlid Type for a Stack',
-			body: 'Invlid Type for a Stack',
+			body: 'A Stack can only have a Type of Number, String or Boolean',
 			error: true,
 		});
 	}
 	if (size <= 0 || size >= 20) {
 		errors.push({
 			head: 'Invlid Size for a Stack',
-			body: 'Invlid Size for a Stack',
+			body: 'Size of Stack cannot Exceed 20 and cannot be less than 0',
 			error: true,
 		});
 	}
