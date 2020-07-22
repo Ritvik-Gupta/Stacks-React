@@ -1,48 +1,33 @@
 export const validTypes = ['number', 'string', 'boolean'];
 
-export const isValidType = type => {
-	if (validTypes.includes(type.toLowerCase())) return true;
-	return false;
+const validityChecks = {
+	number: val => /^(\d)+(.(\d)+)?$/i.test(val),
+	boolean: val => val === 'true' || val === 'false',
+	string: val => typeof val === 'string' && val !== '',
+};
+
+export const getType = val => {
+	return Object.entries(validityChecks).reduce((found, check) => {
+		if (found === null && check[1](val) === true) return check[0];
+		return found;
+	}, null);
 };
 
 export const isValidPush = (val, type) => {
-	const NumberRegExp = /^(\d)+(.(\d)+)?$/i;
-
-	if (type === 'number')
-		return NumberRegExp.test(val)
-			? []
-			: [
-					{
-						head: 'Invalid Input of Type Number',
-						body: 'Element to push should be a Number',
-						error: true,
-					},
-			  ];
-	if (type === 'boolean')
-		return val === 'true' || val === 'false'
-			? []
-			: [
-					{
-						head: 'Invalid Input of Type Boolean',
-						body: 'Element to push should be a Boolean',
-						error: true,
-					},
-			  ];
-	if (type === 'string')
-		return typeof val === 'string'
-			? []
-			: [
-					{
-						head: 'Invalid Input of Type String',
-						body: 'Element to push should be a String',
-						error: true,
-					},
-			  ];
+	return type === getType(val)
+		? []
+		: [
+				{
+					head: `Invalid Input of Type < ${type} >`,
+					body: `Element to push should be a < ${type} >`,
+					error: true,
+				},
+		  ];
 };
 
 export const isValidStackConfig = (name, type, size) => {
 	const errors = [];
-	if (name.length <= 0 || name.length >= 20 || name.toLowerCase() === 'default') {
+	if (name.length <= 0 || name.length > 20 || name.toLowerCase() === 'default') {
 		errors.push({
 			head: 'Invalid Name for a Stack',
 			body: 'Enter a Valid Name that is not "Default" or ""',
@@ -56,7 +41,7 @@ export const isValidStackConfig = (name, type, size) => {
 			error: true,
 		});
 	}
-	if (size <= 0 || size >= 20) {
+	if (size <= 0 || size > 20) {
 		errors.push({
 			head: 'Invlid Size for a Stack',
 			body: 'Size of Stack cannot Exceed 20 and cannot be less than 0',

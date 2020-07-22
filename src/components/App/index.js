@@ -53,7 +53,7 @@ const App = () => {
 				{
 					name,
 					type,
-					stack: new Stack(new Array(size).fill(null)),
+					stack: new Stack(size),
 				},
 			]);
 			setCollectedMessages([
@@ -72,10 +72,7 @@ const App = () => {
 		if (messages.some(msg => msg.error === true)) {
 			setCollectedMessages([...collectedMessages, ...messages]);
 		} else {
-			const newStack = new Stack(
-				stackCollection[stackPos].stack.copy,
-				stackCollection[stackPos].stack.top
-			);
+			const newStack = Stack.create(stackCollection[stackPos].stack);
 			if (newStack.push(value) === false) {
 				setCollectedMessages([
 					...collectedMessages,
@@ -105,10 +102,7 @@ const App = () => {
 	};
 
 	const handleStackPop = () => {
-		const newStack = new Stack(
-			stackCollection[stackPos].stack.copy,
-			stackCollection[stackPos].stack.top
-		);
+		const newStack = Stack.create(stackCollection[stackPos].stack);
 		const value = newStack.pop();
 		if (value === null) {
 			setCollectedMessages([

@@ -1,8 +1,8 @@
 class Stack {
-	constructor(array = new Array(10).fill(null), top = -1) {
-		this.stack = array;
-		this.size = array.length;
-		this.top = top;
+	constructor(size = 10) {
+		this.stack = new Array(size).fill(null);
+		this.size = size;
+		this.top = -1;
 	}
 
 	isFull() {
@@ -28,6 +28,14 @@ class Stack {
 			return value;
 		}
 		return null;
+	}
+
+	static create(prevStack) {
+		const newStack = new Stack();
+		newStack.stack = prevStack.stack;
+		newStack.size = prevStack.size;
+		newStack.top = prevStack.top;
+		return newStack;
 	}
 
 	get copy() {

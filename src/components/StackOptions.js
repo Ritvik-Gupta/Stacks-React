@@ -7,6 +7,7 @@ const StackOptions = ({ currentStack, handleStackPush, handleStackPop }) => {
 	const [pushInput, setPushInput] = useState('');
 
 	const onInputChange = (_, { value }) => {
+		console.log(value);
 		setPushInput(value);
 	};
 
@@ -39,7 +40,7 @@ const StackOptions = ({ currentStack, handleStackPush, handleStackPop }) => {
 			<Form.Input
 				fluid
 				value={pushInput}
-				type={currentStack.type === 'number' ? 'number' : 'text'}
+				type='text'
 				placeholder='Enter an element ...'
 				onChange={onInputChange}
 			/>

@@ -46,8 +46,6 @@ const StackCreatePresentation = ({
 					/>
 					<Form.Input
 						type='number'
-						min={0}
-						max={20}
 						value={inputSize}
 						fluid
 						label='Stack Size'

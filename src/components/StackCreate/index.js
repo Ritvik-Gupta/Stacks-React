@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { getIcon, getColor, validTypes } from '../../services/logicFuncs';
 
-import StackCreatePresentation from './StackCreate.presentation';
+import StackCreatePresentation from './StackCreate.present';
 
 const StackCreate = ({ handleStackCreate }) => {
 	const [modalOpen, setModalOpen] = useState(false);
