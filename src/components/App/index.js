@@ -8,7 +8,7 @@ import StackMenu from '../StacksMenu';
 import VisualStack from '../VisualStack';
 import StackCreate from '../StackCreate';
 import StackOptions from '../StackOptions';
-import MessageStack from '../MessageStack';
+import MessageStack from '../MessagesStack';
 
 const App = () => {
 	const [collectedMessages, setCollectedMessages] = useState([]);

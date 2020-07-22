@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Form, Icon, Button } from 'semantic-ui-react';
+import { Form, Icon } from 'semantic-ui-react';
 
-import { ScrollDiv } from '../services/StyledComponents';
+import { StyledButton, ScrollDiv } from '../services/StyledComponents';
 
 const StackOptions = ({ currentStack, handleStackPush, handleStackPop }) => {
 	const [pushInput, setPushInput] = useState('');
@@ -49,15 +49,12 @@ const StackOptions = ({ currentStack, handleStackPush, handleStackPop }) => {
 		<ScrollDiv noScroll outset>
 			<Form onSubmit={onStackPush}>
 				{input}
-				<Button.Group fluid>
-					<Button negative type='button' onClick={onStackPop}>
-						Pop
-					</Button>
-					<Button.Or />
-					<Button type='submit' positive>
-						Push
-					</Button>
-				</Button.Group>
+				<StyledButton floated='left' type='button' onClick={onStackPop}>
+					Pop
+				</StyledButton>
+				<StyledButton floated='right' type='submit'>
+					Push
+				</StyledButton>
 			</Form>
 		</ScrollDiv>
 	);

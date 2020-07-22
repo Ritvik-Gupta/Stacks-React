@@ -84,9 +84,9 @@ export const getColor = type => {
 		case 'number':
 			return 'orange';
 		case 'string':
-			return 'olive';
+			return 'green';
 		case 'boolean':
-			return 'teal';
+			return 'blue';
 		default:
 			return 'red';
 	}
