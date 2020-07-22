@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import { createGlobalStyle } from 'styled-components';
 import 'semantic-ui-css/semantic.min.css';
 
-import { background } from './services/StyledComponents';
-
 import App from './components/App';
 
 const GlobalStyle = createGlobalStyle`
@@ -22,8 +20,6 @@ const GlobalStyle = createGlobalStyle`
    #root {
       width: 100%;
       height: 100%;
-      padding: 10px;
-      background: ${background};
    }
 `;
 

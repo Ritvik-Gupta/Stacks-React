@@ -9,7 +9,10 @@ const MessagesStackPresentation = ({
 	emptyStack,
 	messageOpen,
 	archiveOpen,
-	handleEvents,
+	onClose,
+	onMessageOpen,
+	onArchiveOpen,
+	onMessageArchive,
 }) => (
 	<React.Fragment>
 		<ScrollDiv noScroll outset>
@@ -30,7 +33,7 @@ const MessagesStackPresentation = ({
 					pointing: 'left',
 					content: messageStack.length,
 				}}
-				onClick={handleEvents.onMessageOpen}
+				onClick={onMessageOpen}
 			/>
 			<StyledButton
 				floated='right'
@@ -42,7 +45,7 @@ const MessagesStackPresentation = ({
 					pointing: 'left',
 					content: archiveStack.length,
 				}}
-				onClick={handleEvents.onArchiveOpen}
+				onClick={onArchiveOpen}
 			/>
 		</ScrollDiv>
 
@@ -57,16 +60,11 @@ const MessagesStackPresentation = ({
 				</Modal.Description>
 			</Modal.Content>
 			<Modal.Actions>
-				<Button
-					icon
-					primary
-					labelPosition='right'
-					onClick={handleEvents.onMessageArchive}
-				>
+				<Button icon primary labelPosition='right' onClick={onMessageArchive}>
 					<Icon name='chevron right' />
 					Archive all the messages
 				</Button>
-				<Button negative onClick={handleEvents.onClose}>
+				<Button negative onClick={onClose}>
 					Close
 				</Button>
 			</Modal.Actions>
@@ -82,7 +80,7 @@ const MessagesStackPresentation = ({
 				</Modal.Description>
 			</Modal.Content>
 			<Modal.Actions>
-				<Button negative onClick={handleEvents.onClose}>
+				<Button negative onClick={onClose}>
 					Close
 				</Button>
 			</Modal.Actions>

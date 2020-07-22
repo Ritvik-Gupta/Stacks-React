@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Icon } from 'semantic-ui-react';
+import { Form, Icon, Header } from 'semantic-ui-react';
 
 import { StyledButton, ScrollDiv } from '../services/StyledComponents';
 
@@ -20,12 +20,12 @@ const StackOptions = ({ currentStack, handleStackPush, handleStackPop }) => {
 		setPushInput('');
 	};
 
-	const input =
-		currentStack.type === 'boolean' ? (
+	let inputDesign;
+	if (currentStack.type === 'boolean')
+		inputDesign = (
 			<Form.Select
 				fluid
 				value={pushInput}
-				label='Push into Current Stack'
 				placeholder='Choosea Boolean Value'
 				options={[
 					{ key: 0, text: 'TRUE', value: 'true' },
@@ -33,28 +33,54 @@ const StackOptions = ({ currentStack, handleStackPush, handleStackPop }) => {
 				]}
 				onChange={onInputChange}
 			/>
-		) : (
+		);
+	else {
+		inputDesign = (
 			<Form.Input
 				fluid
 				value={pushInput}
 				type={currentStack.type === 'number' ? 'number' : 'text'}
-				label='Push into Current Stack'
 				placeholder='Enter an element ...'
-				icon={<Icon name='inbox' color='violet' inverted circular link />}
 				onChange={onInputChange}
 			/>
 		);
+	}
 
 	return (
 		<ScrollDiv noScroll outset>
-			<Form onSubmit={onStackPush}>
-				{input}
-				<StyledButton floated='left' type='button' onClick={onStackPop}>
-					Pop
-				</StyledButton>
-				<StyledButton floated='right' type='submit'>
-					Push
-				</StyledButton>
+			<Header size='small'>
+				<Icon name='cog' loading />
+				<Header.Content>
+					Stack Operations
+					<Header.Subheader>
+						Apply Push or Pop Operations on the Current Stack
+					</Header.Subheader>
+				</Header.Content>
+			</Header>
+			<Form>
+				<Form.Group widths='equal'>{inputDesign}</Form.Group>
+				<Form.Group widths='equal'>
+					<StyledButton
+						fluid
+						icon
+						labelPosition='right'
+						type='button'
+						onClick={onStackPop}
+					>
+						<Icon name='angle double down' />
+						Pop
+					</StyledButton>
+					<StyledButton
+						fluid
+						icon
+						labelPosition='right'
+						type='button'
+						onClick={onStackPush}
+					>
+						<Icon name='angle double up' />
+						Push
+					</StyledButton>
+				</Form.Group>
 			</Form>
 		</ScrollDiv>
 	);

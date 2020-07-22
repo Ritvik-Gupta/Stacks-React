@@ -26,19 +26,9 @@ const StackCreatePresentation = ({
 					<Header.Subheader>Initialise an Empty Stack with a Name</Header.Subheader>
 				</Header.Content>
 			</Header>
-			<StyledButton
-				icon
-				fluid
-				primary
-				labelPosition='right'
-				onClick={onModalToggle}
-				animated='fade'
-			>
+			<StyledButton icon fluid labelPosition='right' onClick={onModalToggle}>
 				<Icon name='upload' />
-				<Button.Content visible>Create an Empty Stack</Button.Content>
-				<Button.Content hidden>
-					Click Here to Create a New Empty Stack
-				</Button.Content>
+				Create an Empty Stack
 			</StyledButton>
 		</ScrollDiv>
 		<Modal dimmer='blurring' open={modalOpen} centered={false}>

@@ -8,12 +8,11 @@ const VisualStack = ({ currentStack }) => {
 	const icon = getIcon(currentStack.type);
 	const color = getColor(currentStack.type);
 
-	const stack = currentStack.stack.copy.filter(el => el !== null);
+	const stack = currentStack.stack.copy.filter(el => el !== null).reverse();
 	const mappedStack = stack.map((el, index) => {
 		return (
 			<Segment
 				key={index}
-				padded
 				raised
 				inverted
 				secondary

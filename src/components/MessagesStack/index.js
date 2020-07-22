@@ -11,25 +11,24 @@ const MessageStack = ({
 	const [messageOpen, setMessageOpen] = useState(false);
 	const [archiveOpen, setArchiveOpen] = useState(false);
 
-	const handleEvents = {
-		onClose: () => {
-			setMessageOpen(false);
-			setArchiveOpen(false);
-		},
+	const onClose = () => {
+		setMessageOpen(false);
+		setArchiveOpen(false);
+	};
 
-		onMessageOpen: () => {
-			setMessageOpen(true);
-			setArchiveOpen(false);
-		},
+	const onMessageOpen = () => {
+		setMessageOpen(true);
+		setArchiveOpen(false);
+	};
 
-		onArchiveOpen: () => {
-			setMessageOpen(false);
-			setArchiveOpen(true);
-		},
+	const onArchiveOpen = () => {
+		setMessageOpen(false);
+		setArchiveOpen(true);
+	};
 
-		onMessageArchive: () => {
-			handleMessageArchive();
-		},
+	const onMessageArchive = () => {
+		handleMessageArchive();
+		onClose();
 	};
 
 	const renderMessages = stack =>
@@ -64,7 +63,10 @@ const MessageStack = ({
 			emptyStack={emptyStack}
 			messageOpen={messageOpen}
 			archiveOpen={archiveOpen}
-			handleEvents={handleEvents}
+			onClose={onClose}
+			onMessageOpen={onMessageOpen}
+			onArchiveOpen={onArchiveOpen}
+			onMessageArchive={onMessageArchive}
 		/>
 	);
 };
