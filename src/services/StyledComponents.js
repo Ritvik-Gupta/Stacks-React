@@ -25,7 +25,7 @@ export const StyledButton = styled(Button)`
 	color: black !important;
 	background: ${background} !important;
 	box-shadow: ${outsetShadowIntense} !important;
-	margin-top: 2% !important;
+	margin-top: 1% !important;
 
 	&:hover {
 		background: ${backgroundHover} !important;

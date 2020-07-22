@@ -24,6 +24,7 @@ const MessagesStackPresentation = ({
 				</Header.Content>
 			</Header>
 			<StyledButton
+				floated='right'
 				icon='fork'
 				content='Current Messages'
 				label={{
