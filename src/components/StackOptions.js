@@ -7,7 +7,6 @@ const StackOptions = ({ currentStack, handleStackPush, handleStackPop }) => {
 	const [pushInput, setPushInput] = useState('');
 
 	const onInputChange = (_, { value }) => {
-		console.log(value);
 		setPushInput(value);
 	};
 

@@ -12,8 +12,8 @@ export const Grid = styled('div')`
 	grid-template-columns: repeat(10, 1fr);
 	grid-gap: 1.5%;
 	grid-template-areas:
-		'a a a a a a d d d d'
-		'a a a a a a d d d d'
+		'a a a a a d d d d d'
+		'a a a a a d d d d d'
 		'x x x x x x c c c c'
 		'b b b b b b c c c c'
 		'b b b b b b c c c c'
@@ -26,11 +26,10 @@ export const Grid = styled('div')`
 	@media (max-width: 800px) {
 		height: 200%;
 		background-size: 100% 250%;
-		padding: 1%;
-		display: grid;
+		padding: 0%;
 		grid-template-rows: repeat(16, 1fr);
 		grid-template-columns: repeat(1, 1fr);
-		grid-gap: 1%;
+		grid-gap: 0%;
 		grid-template-areas:
 			'a'
 			'a'

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Segment, Message, Header, Icon } from 'semantic-ui-react';
+import { Segment, Message, Header, Icon, Transition } from 'semantic-ui-react';
 
 import { getIcon, getColor } from '../services/logicFuncs';
 import { ScrollDiv } from '../services/StyledComponents';
@@ -12,7 +12,7 @@ const VisualStack = ({ currentStack }) => {
 	const mappedStack = stack.map((el, index) => {
 		return (
 			<Segment
-				key={index}
+				key={stack.length - index}
 				raised
 				inverted
 				secondary
@@ -25,7 +25,6 @@ const VisualStack = ({ currentStack }) => {
 	});
 	const emptyStack = (
 		<Message
-			floating
 			error
 			size='small'
 			icon='crosshairs'
@@ -43,7 +42,9 @@ const VisualStack = ({ currentStack }) => {
 					<Header.Subheader>Type : {currentStack.type}</Header.Subheader>
 				</Header.Content>
 			</Header>
-			{stack.length > 0 ? mappedStack : emptyStack}
+			<Transition.Group animation='scale'>
+				{stack.length > 0 ? mappedStack : emptyStack}
+			</Transition.Group>
 		</ScrollDiv>
 	);
 };

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useImmer } from 'use-immer';
 
 import Stack from '../../services/Stack';
 import { isValidStackConfig, isValidPush } from '../../services/logicFuncs';
@@ -11,10 +12,11 @@ import StackOptions from '../StackOptions';
 import MessageStack from '../MessagesStack';
 
 const App = () => {
-	const [collectedMessages, setCollectedMessages] = useState([]);
-	const [archivedMessages, setArchivedMessages] = useState([]);
 	const [stackPos, setStackPos] = useState(0);
-	const [stackCollection, setStackCollection] = useState([
+
+	const [collectedMessages, setCollectedMessages] = useImmer([]);
+	const [archivedMessages, setArchivedMessages] = useImmer([]);
+	const [stackCollection, setStackCollection] = useImmer([
 		{
 			name: 'Default',
 			type: 'number',
@@ -39,6 +41,13 @@ const App = () => {
 		console.groupEnd();
 	}, [stackCollection, stackPos]);
 
+	useEffect(() => {
+		console.groupCollapsed('Current Messages ...');
+		console.log(collectedMessages);
+		console.log(archivedMessages);
+		console.groupEnd();
+	}, [collectedMessages, archivedMessages]);
+
 	const handleStackChange = index => {
 		setStackPos(index);
 	};
@@ -46,57 +55,50 @@ const App = () => {
 	const handleStackCreate = (name, type, size) => {
 		const messages = isValidStackConfig(name, type, size);
 		if (messages.some(msg => msg.error === true)) {
-			setCollectedMessages([...collectedMessages, ...messages]);
+			setCollectedMessages(draft => draft.concat(messages));
 		} else {
-			setStackCollection([
-				...stackCollection,
-				{
+			setStackCollection(draft => {
+				draft.push({
 					name,
 					type,
 					stack: new Stack(size),
-				},
-			]);
-			setCollectedMessages([
-				...collectedMessages,
-				{
+				});
+			});
+			setCollectedMessages(draft => {
+				draft.push({
 					head: 'Stack Created Successfully',
 					body: `Created Stack ${name.toUpperCase()} of Type < ${type} >`,
 					error: false,
-				},
-			]);
+				});
+			});
 		}
 	};
 
 	const handleStackPush = value => {
 		const messages = isValidPush(value, stackCollection[stackPos].type);
 		if (messages.some(msg => msg.error === true)) {
-			setCollectedMessages([...collectedMessages, ...messages]);
+			setCollectedMessages(draft => draft.concat(messages));
 		} else {
 			const newStack = Stack.create(stackCollection[stackPos].stack);
 			if (newStack.push(value) === false) {
-				setCollectedMessages([
-					...collectedMessages,
-					{
+				setCollectedMessages(draft => {
+					draft.push({
 						head: 'Stack is Full',
 						body: 'Cannot Push any more elements.',
 						error: true,
-					},
-				]);
+					});
+				});
 			} else {
-				setStackCollection(
-					stackCollection.map((el, index) => {
-						if (index !== stackPos) return el;
-						return { ...el, stack: newStack };
-					})
-				);
-				setCollectedMessages([
-					...collectedMessages,
-					{
+				setStackCollection(draft => {
+					draft[stackPos].stack = newStack;
+				});
+				setCollectedMessages(draft => {
+					draft.push({
 						head: 'Element Pushed Successfully',
 						body: `Pushed element : ${value}`,
 						error: false,
-					},
-				]);
+					});
+				});
 			}
 		}
 	};
@@ -105,35 +107,30 @@ const App = () => {
 		const newStack = Stack.create(stackCollection[stackPos].stack);
 		const value = newStack.pop();
 		if (value === null) {
-			setCollectedMessages([
-				...collectedMessages,
-				{
+			setCollectedMessages(draft => {
+				draft.push({
 					head: 'Stack is Empty',
 					body: 'Cannot Pop any more elements.',
 					error: true,
-				},
-			]);
+				});
+			});
 		} else {
-			setStackCollection(
-				stackCollection.map((el, index) => {
-					if (index !== stackPos) return el;
-					return { ...el, stack: newStack };
-				})
-			);
-			setCollectedMessages([
-				...collectedMessages,
-				{
+			setStackCollection(draft => {
+				draft[stackPos].stack = newStack;
+			});
+			setCollectedMessages(draft => {
+				draft.push({
 					head: 'Element Popped Successfully',
 					body: `Popped element : ${value}`,
 					error: false,
-				},
-			]);
+				});
+			});
 		}
 	};
 
 	const handleMessageArchive = () => {
-		setArchivedMessages([...archivedMessages, ...collectedMessages]);
-		setCollectedMessages([]);
+		setArchivedMessages(draft => draft.concat(collectedMessages));
+		setCollectedMessages(() => []);
 	};
 
 	return (

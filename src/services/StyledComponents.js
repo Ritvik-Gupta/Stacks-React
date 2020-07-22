@@ -14,7 +14,6 @@ export const ScrollDiv = styled('div')`
 	width: 100%;
 	height: 100%;
 
-	border-radius: 10px;
 	background: ${background};
 	box-shadow: ${props => (props.outset ? outsetShadow : insetShadow)};
 
@@ -23,7 +22,6 @@ export const ScrollDiv = styled('div')`
 `;
 
 export const StyledButton = styled(Button)`
-	border-radius: 5px !important;
 	color: black !important;
 	background: ${background} !important;
 	box-shadow: ${outsetShadowIntense} !important;

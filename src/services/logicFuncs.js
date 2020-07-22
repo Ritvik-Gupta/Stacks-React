@@ -41,10 +41,10 @@ export const isValidStackConfig = (name, type, size) => {
 			error: true,
 		});
 	}
-	if (size <= 0 || size > 20) {
+	if (size <= 0 || size > 20 || Math.floor(size) !== Math.ceil(size)) {
 		errors.push({
 			head: 'Invlid Size for a Stack',
-			body: 'Size of Stack cannot Exceed 20 and cannot be less than 0',
+			body: 'Size of Stack cannot Exceed 20 and cannot be a Floating Number',
 			error: true,
 		});
 	}
