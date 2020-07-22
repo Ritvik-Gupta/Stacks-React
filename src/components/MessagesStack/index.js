@@ -28,7 +28,6 @@ const MessageStack = ({
 
 	const onMessageArchive = () => {
 		handleMessageArchive();
-		onClose();
 	};
 
 	const renderMessages = stack =>

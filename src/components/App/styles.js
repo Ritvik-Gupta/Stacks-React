@@ -14,39 +14,37 @@ export const Grid = styled('div')`
 	grid-template-areas:
 		'a a a a a d d d d d'
 		'a a a a a d d d d d'
-		'x x x x x x c c c c'
+		'1 1 1 1 1 1 c c c c'
 		'b b b b b b c c c c'
 		'b b b b b b c c c c'
 		'b b b b b b c c c c'
-		'y y y y y y c c c c'
+		'2 2 2 2 2 2 c c c c'
 		'e e e e e e c c c c'
 		'e e e e e e c c c c'
-		'z z z z z z z z z z';
+		'3 3 3 3 3 3 3 3 3 3';
 
 	@media (max-width: 800px) {
-		height: 200%;
+		height: 250%;
 		background-size: 100% 250%;
 		padding: 0%;
-		grid-template-rows: repeat(16, 1fr);
+		grid-template-rows: repeat(14, 1fr);
 		grid-template-columns: repeat(1, 1fr);
 		grid-gap: 0%;
 		grid-template-areas:
 			'a'
-			'a'
+			'1'
 			'c'
 			'c'
 			'c'
 			'c'
-			'x'
+			'2'
 			'd'
-			'd'
+			'3'
 			'b'
 			'b'
-			'b'
-			'y'
+			'4'
 			'e'
-			'e'
-			'z';
+			'5';
 	}
 `;
 export const GridItem = styled('div')`

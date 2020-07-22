@@ -24,7 +24,6 @@ const MessagesStackPresentation = ({
 				</Header.Content>
 			</Header>
 			<StyledButton
-				floated='left'
 				icon='fork'
 				content='Current Messages'
 				label={{
@@ -35,21 +34,9 @@ const MessagesStackPresentation = ({
 				}}
 				onClick={onMessageOpen}
 			/>
-			<StyledButton
-				floated='right'
-				icon='inbox'
-				content='Messages Archived'
-				label={{
-					basic: false,
-					color: 'grey',
-					pointing: 'left',
-					content: archiveStack.length,
-				}}
-				onClick={onArchiveOpen}
-			/>
 		</ScrollDiv>
 
-		<Modal dimmer='blurring' open={messageOpen} centered={false}>
+		<Modal open={messageOpen} centered={false}>
 			<Modal.Header>Current Messages Collected</Modal.Header>
 			<Modal.Content scrolling>
 				<Modal.Description>
@@ -64,12 +51,18 @@ const MessagesStackPresentation = ({
 					<Icon name='chevron right' />
 					Archive all the messages
 				</Button>
-				<Button negative onClick={onClose}>
-					Close
+				<Button icon positive labelPosition='right' onClick={onArchiveOpen}>
+					<Icon name='inbox' />
+					Open Archived Messages
+				</Button>
+				<Button icon negative labelPosition='right' onClick={onClose}>
+					<Icon name='close' />
+					Close Messages
 				</Button>
 			</Modal.Actions>
 		</Modal>
-		<Modal dimmer='blurring' open={archiveOpen} centered={false}>
+
+		<Modal open={archiveOpen} centered={false}>
 			<Modal.Header>Current Messages Archived</Modal.Header>
 			<Modal.Content scrolling>
 				<Modal.Description>
@@ -80,8 +73,9 @@ const MessagesStackPresentation = ({
 				</Modal.Description>
 			</Modal.Content>
 			<Modal.Actions>
-				<Button negative onClick={onClose}>
-					Close
+				<Button icon negative labelPosition='right' onClick={onClose}>
+					<Icon name='close' />
+					Close Messages
 				</Button>
 			</Modal.Actions>
 		</Modal>
