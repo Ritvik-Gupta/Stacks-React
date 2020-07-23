@@ -27,7 +27,6 @@ const VisualStack = ({ currentStack }) => {
 		<Message
 			error
 			size='small'
-			icon='crosshairs'
 			header='Empty Stack'
 			content={`${currentStack.name.toUpperCase()} Stack is empty .`}
 		/>

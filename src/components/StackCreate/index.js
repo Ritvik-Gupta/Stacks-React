@@ -18,42 +18,44 @@ const StackCreate = ({ handleStackCreate }) => {
 		text: type.toUpperCase(),
 	}));
 
-	const handleEvents = {
-		onModalToggle: () => {
-			setModalOpen(!modalOpen);
-		},
+	const onModalToggle = () => {
+		setModalOpen(!modalOpen);
+	};
 
-		onNameChange: (_, { value }) => {
-			setInputName(value);
-		},
+	const onNameChange = (_, { value }) => {
+		setInputName(value);
+	};
 
-		onTypeChange: (_, { value }) => {
-			setInputType(value);
-		},
+	const onTypeChange = (_, { value }) => {
+		setInputType(value);
+	};
 
-		onSizeChange: (_, { value }) => {
-			setInputSize(Number(value));
-		},
+	const onSizeChange = (_, { value }) => {
+		setInputSize(Number(value));
+	};
 
-		onStackSubmit: () => {
-			handleStackCreate(inputName, validTypes[inputType], inputSize);
-			setModalOpen(false);
-			setInputName('');
-			setInputType(0);
-			setInputSize(5);
-		},
+	const onStackSubmit = () => {
+		handleStackCreate(inputName, validTypes[inputType], inputSize);
+		setModalOpen(false);
+		setInputName('');
+		setInputType(0);
+		setInputSize(5);
 	};
 
 	return (
 		<StackCreatePresentation
+			icon={icon}
+			color={color}
+			options={options}
 			modalOpen={modalOpen}
 			inputName={inputName}
 			inputType={inputType}
 			inputSize={inputSize}
-			icon={icon}
-			color={color}
-			options={options}
-			{...handleEvents}
+			onModalToggle={onModalToggle}
+			onNameChange={onNameChange}
+			onTypeChange={onTypeChange}
+			onSizeChange={onSizeChange}
+			onStackSubmit={onStackSubmit}
 		/>
 	);
 };

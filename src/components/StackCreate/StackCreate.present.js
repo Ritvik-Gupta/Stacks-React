@@ -4,13 +4,13 @@ import { Icon, Button, Form, Modal, Header } from 'semantic-ui-react';
 import { StyledButton, ScrollDiv } from '../../services/StyledComponents';
 
 const StackCreatePresentation = ({
+	icon,
+	color,
+	options,
 	modalOpen,
 	inputName,
 	inputType,
 	inputSize,
-	icon,
-	color,
-	options,
 	onModalToggle,
 	onNameChange,
 	onTypeChange,
@@ -31,7 +31,7 @@ const StackCreatePresentation = ({
 				Create an Empty Stack
 			</StyledButton>
 		</ScrollDiv>
-		<Modal dimmer='blurring' open={modalOpen} centered={false}>
+		<Modal open={modalOpen} centered={false}>
 			<Modal.Header>Stack Creation Form</Modal.Header>
 			<Modal.Content>
 				<Form onSubmit={onStackSubmit}>

@@ -1,16 +1,16 @@
 export const validTypes = ['number', 'string', 'boolean'];
 
-const validityChecks = {
-	number: val => /^(\d)+(.(\d)+)?$/i.test(val),
-	boolean: val => val === 'true' || val === 'false',
-	string: val => typeof val === 'string' && val !== '',
-};
+const validityChecks = new Map([
+	['number', val => /^(\d)+(.(\d)+)?$/i.test(val)],
+	['boolean', val => val === 'true' || val === 'false'],
+	['string', val => typeof val === 'string' && val !== ''],
+]);
 
 export const getType = val => {
-	return Object.entries(validityChecks).reduce((found, check) => {
-		if (found === null && check[1](val) === true) return check[0];
-		return found;
-	}, null);
+	for (let [type, check] of validityChecks) {
+		if (check(val) === true) return type;
+	}
+	return null;
 };
 
 export const isValidPush = (val, type) => {

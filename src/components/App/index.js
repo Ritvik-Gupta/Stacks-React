@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useImmer } from 'use-immer';
+import React from 'react';
+import immer from 'immer';
 
 import Stack from '../../services/Stack';
 import { isValidStackConfig, isValidPush } from '../../services/logicFuncs';
@@ -11,159 +11,200 @@ import StackCreate from '../StackCreate';
 import StackOptions from '../StackOptions';
 import MessageStack from '../MessagesStack';
 
-const App = () => {
-	const [stackPos, setStackPos] = useState(0);
-
-	const [collectedMessages, setCollectedMessages] = useImmer([]);
-	const [archivedMessages, setArchivedMessages] = useImmer([]);
-	const [stackCollection, setStackCollection] = useImmer([
-		{
-			name: 'Default',
-			type: 'number',
-			stack: new Stack(),
-		},
-		{
-			name: 'Default',
-			type: 'string',
-			stack: new Stack(),
-		},
-		{
-			name: 'Default',
-			type: 'boolean',
-			stack: new Stack(),
-		},
-	]);
-
-	useEffect(() => {
-		console.groupCollapsed('Current Stack Config ...');
-		console.log('Current Position :\t', stackPos);
-		console.log(stackCollection[stackPos]);
-		console.groupEnd();
-	}, [stackCollection, stackPos]);
-
-	useEffect(() => {
-		console.groupCollapsed('Current Messages ...');
-		console.log(collectedMessages);
-		console.log(archivedMessages);
-		console.groupEnd();
-	}, [collectedMessages, archivedMessages]);
-
-	const handleStackChange = index => {
-		setStackPos(index);
+class App extends React.Component {
+	state = {
+		stackPos: 0,
+		collectedMessages: [],
+		archivedMessages: [],
+		stackCollection: [
+			{
+				name: 'Default',
+				type: 'string',
+				stack: new Stack(),
+			},
+			{
+				name: 'Default',
+				type: 'number',
+				stack: new Stack(),
+			},
+			{
+				name: 'Default',
+				type: 'boolean',
+				stack: new Stack(),
+			},
+		],
 	};
 
-	const handleStackCreate = (name, type, size) => {
+	componentDidUpdate(prevState) {
+		console.clear();
+		if (
+			prevState.stackPos !== this.state.stackPos ||
+			prevState.stackCollection !== this.state.stackCollection
+		) {
+			console.groupCollapsed('Current Stack Config ...');
+			console.log('Current Position :\t', this.state.stackPos);
+			console.log(this.state.stackCollection[this.state.stackPos]);
+			console.groupEnd();
+		}
+
+		if (
+			prevState.collectedMessages !== this.state.collectedMessages ||
+			prevState.archivedMessages !== this.state.archivedMessages
+		) {
+			console.groupCollapsed('Current Messages ...');
+			console.log(this.state.collectedMessages);
+			console.log(this.state.archivedMessages);
+			console.groupEnd();
+		}
+	}
+
+	handleStackChange = index => {
+		this.setState(
+			immer(draft => {
+				draft.stackPos = index;
+			})
+		);
+	};
+
+	handleStackCreate = (name, type, size) => {
 		const messages = isValidStackConfig(name, type, size);
 		if (messages.some(msg => msg.error === true)) {
-			setCollectedMessages(draft => draft.concat(messages));
+			this.setState(
+				immer(draft => {
+					draft.collectedMessages.push(...messages);
+				})
+			);
 		} else {
-			setStackCollection(draft => {
-				draft.push({
-					name,
-					type,
-					stack: new Stack(size),
-				});
-			});
-			setCollectedMessages(draft => {
-				draft.push({
-					head: 'Stack Created Successfully',
-					body: `Created Stack ${name.toUpperCase()} of Type < ${type} >`,
-					error: false,
-				});
-			});
+			this.setState(
+				immer(draft => {
+					draft.stackCollection.push({
+						name,
+						type,
+						stack: new Stack(size),
+					});
+					draft.collectedMessages.push({
+						head: 'Stack Created Successfully',
+						body: `Created Stack ${name.toUpperCase()} of Type < ${type} >`,
+						error: false,
+					});
+				})
+			);
 		}
 	};
 
-	const handleStackPush = value => {
-		const messages = isValidPush(value, stackCollection[stackPos].type);
+	handleStackPush = value => {
+		const messages = isValidPush(
+			value,
+			this.state.stackCollection[this.state.stackPos].type
+		);
 		if (messages.some(msg => msg.error === true)) {
-			setCollectedMessages(draft => draft.concat(messages));
+			this.setState(
+				immer(draft => {
+					draft.collectedMessages.push(...messages);
+				})
+			);
 		} else {
-			const newStack = Stack.create(stackCollection[stackPos].stack);
+			const newStack = Stack.create(
+				this.state.stackCollection[this.state.stackPos].stack
+			);
 			if (newStack.push(value) === false) {
-				setCollectedMessages(draft => {
-					draft.push({
-						head: 'Stack is Full',
-						body: 'Cannot Push any more elements.',
-						error: true,
-					});
-				});
+				this.setState(
+					immer(draft => {
+						draft.collectedMessages.push({
+							head: 'Stack is Full',
+							body: 'Cannot Push any more elements.',
+							error: true,
+						});
+					})
+				);
 			} else {
-				setStackCollection(draft => {
-					draft[stackPos].stack = newStack;
-				});
-				setCollectedMessages(draft => {
-					draft.push({
-						head: 'Element Pushed Successfully',
-						body: `Pushed element : ${value}`,
-						error: false,
-					});
-				});
+				this.setState(
+					immer(draft => {
+						draft.stackCollection[draft.stackPos].stack = newStack;
+						draft.collectedMessages.push({
+							head: 'Element Pushed Successfully',
+							body: `Pushed element : ${value}`,
+							error: false,
+						});
+					})
+				);
 			}
 		}
 	};
 
-	const handleStackPop = () => {
-		const newStack = Stack.create(stackCollection[stackPos].stack);
+	handleStackPop = () => {
+		const newStack = Stack.create(
+			this.state.stackCollection[this.state.stackPos].stack
+		);
 		const value = newStack.pop();
 		if (value === null) {
-			setCollectedMessages(draft => {
-				draft.push({
-					head: 'Stack is Empty',
-					body: 'Cannot Pop any more elements.',
-					error: true,
-				});
-			});
+			this.setState(
+				immer(draft => {
+					draft.collectedMessages.push({
+						head: 'Stack is Empty',
+						body: 'Cannot Pop any more elements.',
+						error: true,
+					});
+				})
+			);
 		} else {
-			setStackCollection(draft => {
-				draft[stackPos].stack = newStack;
-			});
-			setCollectedMessages(draft => {
-				draft.push({
-					head: 'Element Popped Successfully',
-					body: `Popped element : ${value}`,
-					error: false,
-				});
-			});
+			this.setState(
+				immer(draft => {
+					draft.stackCollection[draft.stackPos].stack = newStack;
+					draft.collectedMessages.push({
+						head: 'Element Popped Successfully',
+						body: `Popped element : ${value}`,
+						error: false,
+					});
+				})
+			);
 		}
 	};
 
-	const handleMessageArchive = () => {
-		setArchivedMessages(draft => draft.concat(collectedMessages));
-		setCollectedMessages(() => []);
+	handleMessageArchive = () => {
+		this.setState(
+			immer(draft => {
+				draft.archivedMessages.push(...draft.collectedMessages);
+				draft.collectedMessages = [];
+			})
+		);
 	};
 
-	return (
-		<Grid>
-			<GridItem area='a'>
-				<StackMenu
-					stackPos={stackPos}
-					stackCollection={stackCollection}
-					handleStackChange={handleStackChange}
-				/>
-			</GridItem>
-			<GridItem area='b'>
-				<StackOptions
-					currentStack={stackCollection[stackPos]}
-					handleStackPush={handleStackPush}
-					handleStackPop={handleStackPop}
-				/>
-			</GridItem>
-			<GridItem area='c'>
-				<VisualStack currentStack={stackCollection[stackPos]} />
-			</GridItem>
-			<GridItem area='d'>
-				<StackCreate handleStackCreate={handleStackCreate} />
-			</GridItem>
-			<GridItem area='e'>
-				<MessageStack
-					collectedMessages={collectedMessages}
-					archivedMessages={archivedMessages}
-					handleMessageArchive={handleMessageArchive}
-				/>
-			</GridItem>
-		</Grid>
-	);
-};
+	render() {
+		return (
+			<Grid>
+				<GridItem area='a'>
+					<StackMenu
+						stackPos={this.state.stackPos}
+						stackCollection={this.state.stackCollection}
+						handleStackChange={this.handleStackChange}
+					/>
+				</GridItem>
+				<GridItem area='b'>
+					<StackOptions
+						currentStack={this.state.stackCollection[this.state.stackPos]}
+						handleStackPush={this.handleStackPush}
+						handleStackPop={this.handleStackPop}
+					/>
+				</GridItem>
+				<GridItem area='c'>
+					<VisualStack
+						currentStack={this.state.stackCollection[this.state.stackPos]}
+					/>
+				</GridItem>
+				<GridItem area='d'>
+					<StackCreate handleStackCreate={this.handleStackCreate} />
+				</GridItem>
+				<GridItem area='e'>
+					<MessageStack
+						collectedMessages={this.state.collectedMessages}
+						archivedMessages={this.state.archivedMessages}
+						handleMessageArchive={this.handleMessageArchive}
+					/>
+				</GridItem>
+			</Grid>
+		);
+	}
+}
 
 export default App;
