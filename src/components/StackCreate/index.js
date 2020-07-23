@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { getIcon, getColor, validTypes } from '../../services/logicFuncs';
+import { getIcon, getColor, validTypes } from '../../services/stackServices';
 
 import StackCreatePresentation from './StackCreate.present';
 

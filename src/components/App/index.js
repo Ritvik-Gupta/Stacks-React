@@ -2,7 +2,11 @@ import React from 'react';
 import immer from 'immer';
 
 import Stack from '../../services/Stack';
-import { isValidStackConfig, isValidPush } from '../../services/logicFuncs';
+import {
+	isValidStackConfig,
+	isValidPush,
+	initialStateStacks,
+} from '../../services/stackServices';
 
 import { Grid, GridItem } from './styles';
 import StackMenu from '../StacksMenu';
@@ -11,51 +15,37 @@ import StackCreate from '../StackCreate';
 import StackOptions from '../StackOptions';
 import MessageStack from '../MessagesStack';
 
+let renderCount = 0;
 class App extends React.Component {
 	state = {
 		stackPos: 0,
+		priorityMessage: null,
 		collectedMessages: [],
 		archivedMessages: [],
-		stackCollection: [
-			{
-				name: 'Default',
-				type: 'string',
-				stack: new Stack(),
-			},
-			{
-				name: 'Default',
-				type: 'number',
-				stack: new Stack(),
-			},
-			{
-				name: 'Default',
-				type: 'boolean',
-				stack: new Stack(),
-			},
-		],
+		stackCollection: initialStateStacks,
 	};
 
-	componentDidUpdate(prevState) {
+	componentDidUpdate() {
 		console.clear();
-		if (
-			prevState.stackPos !== this.state.stackPos ||
-			prevState.stackCollection !== this.state.stackCollection
-		) {
-			console.groupCollapsed('Current Stack Config ...');
-			console.log('Current Position :\t', this.state.stackPos);
-			console.log(this.state.stackCollection[this.state.stackPos]);
-			console.groupEnd();
-		}
+		console.group('Render Number :\t', ++renderCount);
 
-		if (
-			prevState.collectedMessages !== this.state.collectedMessages ||
-			prevState.archivedMessages !== this.state.archivedMessages
-		) {
-			console.groupCollapsed('Current Messages ...');
-			console.log(this.state.collectedMessages);
-			console.log(this.state.archivedMessages);
-			console.groupEnd();
-		}
+		console.groupCollapsed('Current Stack Config ...');
+		console.log('Current Position :');
+		console.log(this.state.stackPos);
+		console.log('Current Stack :');
+		console.log(this.state.stackCollection[this.state.stackPos]);
+		console.groupEnd();
+
+		console.groupCollapsed('Current Messages ...');
+		console.log('Collected Messages :');
+		console.log(this.state.collectedMessages);
+		console.log('Archived Messages :');
+		console.log(this.state.archivedMessages);
+		console.log('Priority Message :');
+		console.log(this.state.priorityMessage);
+		console.groupEnd();
+
+		console.groupEnd();
 	}
 
 	handleStackChange = index => {
@@ -68,7 +58,7 @@ class App extends React.Component {
 
 	handleStackCreate = (name, type, size) => {
 		const messages = isValidStackConfig(name, type, size);
-		if (messages.some(msg => msg.error === true)) {
+		if (messages.length > 0) {
 			this.setState(
 				immer(draft => {
 					draft.collectedMessages.push(...messages);

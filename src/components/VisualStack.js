@@ -1,7 +1,7 @@
 import React from 'react';
 import { Segment, Message, Header, Icon, Transition } from 'semantic-ui-react';
 
-import { getIcon, getColor } from '../services/logicFuncs';
+import { getIcon, getColor } from '../services/stackServices';
 import { ScrollDiv } from '../services/StyledComponents';
 
 const VisualStack = ({ currentStack }) => {

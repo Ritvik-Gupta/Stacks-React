@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dropdown, Header, Icon } from 'semantic-ui-react';
 
-import { getIcon } from '../services/logicFuncs';
+import { getIcon } from '../services/stackServices';
 import { ScrollDiv } from '../services/StyledComponents';
 
 const StacksMenu = ({ stackCollection, handleStackChange, stackPos }) => {
