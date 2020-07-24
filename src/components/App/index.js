@@ -19,14 +19,13 @@ let renderCount = 0;
 class App extends React.Component {
 	state = {
 		stackPos: 0,
-		priorityMessage: [],
+		priorityMessages: [],
 		collectedMessages: [],
 		archivedMessages: [],
 		stackCollection: initialStateStacks,
 	};
 
 	componentDidUpdate() {
-		console.clear();
 		console.group('Render Number :\t', ++renderCount);
 
 		console.groupCollapsed('Current Stack Config ...');
@@ -42,7 +41,7 @@ class App extends React.Component {
 		console.log('Archived Messages :');
 		console.log(this.state.archivedMessages);
 		console.log('Priority Message :');
-		console.log(this.state.priorityMessage);
+		console.log(this.state.priorityMessages);
 		console.groupEnd();
 
 		console.groupEnd();
@@ -57,11 +56,11 @@ class App extends React.Component {
 	};
 
 	handleStackCreate = (name, type, size) => {
-		const messages = isValidStackConfig(name, type, size);
-		if (messages.length > 0) {
+		const errors = isValidStackConfig(name, type, size);
+		if (errors.length > 0) {
 			this.setState(
 				immer(draft => {
-					draft.collectedMessages.push(...messages);
+					draft.collectedMessages.push(...errors);
 				})
 			);
 		} else {
@@ -83,20 +82,16 @@ class App extends React.Component {
 	};
 
 	handleStackPush = value => {
-		const messages = isValidPush(
-			value,
-			this.state.stackCollection[this.state.stackPos].type
-		);
-		if (messages.some(msg => msg.error === true)) {
+		const currentStack = this.state.stackCollection[this.state.stackPos];
+		const error = isValidPush(value, currentStack.type);
+		if (error !== null) {
 			this.setState(
 				immer(draft => {
-					draft.collectedMessages.push(...messages);
+					draft.collectedMessages.push(error);
 				})
 			);
 		} else {
-			const newStack = Stack.create(
-				this.state.stackCollection[this.state.stackPos].stack
-			);
+			const newStack = Stack.create(currentStack.stack);
 			if (newStack.push(value) === false) {
 				this.setState(
 					immer(draft => {
@@ -123,9 +118,8 @@ class App extends React.Component {
 	};
 
 	handleStackPop = () => {
-		const newStack = Stack.create(
-			this.state.stackCollection[this.state.stackPos].stack
-		);
+		const currentStack = this.state.stackCollection[this.state.stackPos];
+		const newStack = Stack.create(currentStack.stack);
 		const value = newStack.pop();
 		if (value === null) {
 			this.setState(

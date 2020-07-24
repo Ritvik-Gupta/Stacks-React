@@ -9,14 +9,12 @@ export const getType = val => {
 
 export const isValidPush = (val, type) => {
 	return type === getType(val)
-		? []
-		: [
-				{
-					head: `Invalid Input of Type < ${type} >`,
-					body: `Element to push should be a < ${type} >`,
-					error: true,
-				},
-		  ];
+		? null
+		: {
+				head: `Invalid Input of Type < ${type} >`,
+				body: `Element to push should be a < ${type} >`,
+				error: true,
+		  };
 };
 
 export const isValidStackConfig = (name, type, size) => {
@@ -49,10 +47,10 @@ export const isValidStackConfig = (name, type, size) => {
 			error: true,
 		});
 	}
-	if (size <= 0 || size > 100) {
+	if (size <= 0 || size > 20) {
 		errors.push({
 			head: 'Invlid Size for a Stack',
-			body: 'Enter a Valid Size that has a length <= 100',
+			body: 'Enter a Valid Size that has a length <= 20',
 			error: true,
 		});
 	}
