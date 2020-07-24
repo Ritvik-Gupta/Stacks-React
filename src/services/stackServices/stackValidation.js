@@ -1,31 +1,4 @@
-import Stack from './Stack';
-
-export const initialStateStacks = [
-	{
-		name: 'Default',
-		type: 'string',
-		stack: new Stack(),
-	},
-	{
-		name: 'Default',
-		type: 'number',
-		stack: new Stack(),
-	},
-	{
-		name: 'Default',
-		type: 'boolean',
-		stack: new Stack(),
-	},
-];
-
-const validityChecks = new Map([
-	['number', val => /^(\d)+(.(\d)+)?$/i.test(val)],
-	['boolean', val => val === 'true' || val === 'false'],
-	['string', val => typeof val === 'string' && val !== ''],
-]);
-
-export const validTypes = [...validityChecks.keys()];
-const invalidStackNames = ['default'];
+import { validityChecks, validTypes, invalidStackNames } from './stackConsts';
 
 export const getType = val => {
 	for (let [type, check] of validityChecks) {
@@ -64,8 +37,8 @@ export const isValidStackConfig = (name, type, size) => {
 	}
 	if (getType(name) !== 'string') {
 		errors.push({
-			head: `Invalid Name entered as a < ${getType(name)} >`,
-			body: 'Enter a Valid Name of Type < string >',
+			head: 'Invalid Name Type for a Stack',
+			body: `Entered Name is of Type < ${getType(name)} >`,
 			error: true,
 		});
 	}
@@ -92,30 +65,4 @@ export const isValidStackConfig = (name, type, size) => {
 	}
 
 	return errors;
-};
-
-export const getIcon = type => {
-	switch (type) {
-		case 'number':
-			return 'sort numeric up';
-		case 'string':
-			return 'sort alphabet up';
-		case 'boolean':
-			return 'sort';
-		default:
-			return 'delete';
-	}
-};
-
-export const getColor = type => {
-	switch (type) {
-		case 'number':
-			return 'orange';
-		case 'string':
-			return 'green';
-		case 'boolean':
-			return 'blue';
-		default:
-			return 'red';
-	}
 };

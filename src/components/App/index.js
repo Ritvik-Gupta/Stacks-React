@@ -19,7 +19,7 @@ let renderCount = 0;
 class App extends React.Component {
 	state = {
 		stackPos: 0,
-		priorityMessage: null,
+		priorityMessage: [],
 		collectedMessages: [],
 		archivedMessages: [],
 		stackCollection: initialStateStacks,
